@@ -1,5 +1,7 @@
 package tk.leaflame.websocketdemo.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.leaflame.websocketdemo.common.Result;
@@ -12,6 +14,7 @@ import tk.leaflame.websocketdemo.service.UserService;
  */
 @RestController
 @RequestMapping("/user")
+@Api(tags = "用户接口")
 public class UserController {
 
     @Autowired
@@ -19,6 +22,7 @@ public class UserController {
 
     //todo @RequestBody User
     @RequestMapping(value = "/reg", method = RequestMethod.POST)
+    @ApiOperation("注册用户")
     public Result regUser(Long userId,/*@RequestParam("username") */String username, /*@RequestParam("password") */String password) {
         int i = userService.regUser(userId, username, password);
         if (i == 1) {
@@ -31,11 +35,13 @@ public class UserController {
 
     //todo
     @PutMapping
+    @ApiOperation("更新用户")
     public Result updateUser(@RequestBody User user) {
         return userService.updateUser(user) == 1 ? Result.ok("更新成功!") : Result.error("更新失败!");
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除用户",notes = "根据用户userId删除用户")
     public Result deleteUser(@PathVariable Long userId) {
         return userService.deleteUser(userId) == 1 ? Result.ok("删除成功!") : Result.error("删除失败!");
     }

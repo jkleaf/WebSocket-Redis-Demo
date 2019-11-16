@@ -32,7 +32,7 @@ import java.util.Map;
  * @date 2019/10/22 23:59
  */
 @Slf4j
-public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
+public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {// /login
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtLoginFilter.class);
 //    @Value("${tk.leaflame.jwt.key}")

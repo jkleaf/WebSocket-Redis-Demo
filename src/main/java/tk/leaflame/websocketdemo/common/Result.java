@@ -9,6 +9,7 @@ public class Result<T> {
     private T data;
     private static final String DEFAULT_SUCCESS_MESSAGE = "SUCCESS";
     private static final String DEFAULT_FAILED_MESSAGE = "FAILED";
+    private static final String DEFAULT_FORBIDDEN_MESSAGE = "FORBIDDEN";
     private static final String DEFAULT_NOT_FOUND_MESSAGE = "NOT FOUND";
     private static final String DEFAULT_UNAUTHORIZED_MESSAGE = "UNAUTHORIZED";
     private static final String DEFAULT_INTERNAL_SERVER_ERROR_MESSAGE = "INTERNAL SERVER ERROR";
@@ -81,5 +82,10 @@ public class Result<T> {
     public static Result failed() {
         return new Result().setCode(ResultCode.FAILED).setMessage(DEFAULT_FAILED_MESSAGE);
     }
+
+    public static Result forbidden(String message) {
+        return new Result().setCode(ResultCode.FORBIDDEN).setMessage(message == null ? DEFAULT_FORBIDDEN_MESSAGE : message);
+    }
+
     //todo
 }

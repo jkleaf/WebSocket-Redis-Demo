@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import tk.leaflame.websocketdemo.component.AuthenticationAccessDeniedHandler;
 import tk.leaflame.websocketdemo.filter.JwtFilter;
 import tk.leaflame.websocketdemo.filter.JwtLoginFilter;
 import tk.leaflame.websocketdemo.service.UserService;
@@ -20,6 +21,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    AuthenticationAccessDeniedHandler accessDeniedHandler;
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -44,7 +48,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/index.html", "/static/**", "/favicon.ico");
+        web.ignoring()
+                .antMatchers("/index.html", "/static/**", "/swagger-ui.html",
+                        "/webjars/**","/swagger-resources/**","/v2/**","/favicon.ico");
     }
 
     @Override
@@ -64,17 +70,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {//http
         http.authorizeRequests()
-                .antMatchers("/test")
-                .hasRole("user")
                 .antMatchers("/admin")
                 .hasRole("admin")
                 .antMatchers(HttpMethod.POST, "/login")
+                .permitAll()
+                .antMatchers("/user/reg")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtLoginFilter("/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
-                .csrf().disable();
+                .csrf().disable()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 }
