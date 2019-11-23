@@ -64,9 +64,11 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {// /
                 .signWith(SignatureAlgorithm.HS256, "destiny")
                 .compact();
         Map<String, String> map = new HashMap<>();
+        map.put("code", String.valueOf(200));//code
         map.put("token", jwt);
         map.put("msg", "登录成功");
         resp.setContentType("application/json;charset=utf-8");
+//        resp.setStatus(200);
         PrintWriter out = resp.getWriter();
         out.write(new ObjectMapper().writeValueAsString(map));
         out.flush();
@@ -76,6 +78,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {// /
     @Override//登录失败
     protected void unsuccessfulAuthentication(HttpServletRequest req, HttpServletResponse resp, AuthenticationException failed) throws IOException, ServletException {
         Map<String, String> map = new HashMap<>();
+        map.put("code", String.valueOf(401));
         map.put("msg", "登录失败");
         resp.setContentType("application/json;charset=utf-8");
         PrintWriter out = resp.getWriter();

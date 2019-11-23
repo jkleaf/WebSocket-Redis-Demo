@@ -1,10 +1,13 @@
 package tk.leaflame.websocketdemo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -13,12 +16,19 @@ import java.util.List;
  * @date 2019/10/22 23:54
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
 
     private Long id;
-    private Long userId;
     private String username;
     private String password;
+    private String email;
+    private String avatar;
+    private Timestamp create_time;
+    private Integer wins;
+    private Long scores;
+
 //    private List<GrantedAuthority> authorities;
 
     @Override

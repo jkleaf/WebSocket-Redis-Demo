@@ -9,7 +9,8 @@ public enum ResultCode {
     FORBIDDEN(HttpServletResponse.SC_FORBIDDEN),
     UNAUTHORIZED(HttpServletResponse.SC_UNAUTHORIZED),//未认证（签名错误）
     NOT_FOUND(HttpServletResponse.SC_NOT_FOUND),//接口不存在
-    INTERNAL_SERVER_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//服务器内部错误
+    INTERNAL_SERVER_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR),//服务器内部错误
+    Created(HttpServletResponse.SC_CREATED);
 
     private final int code;
 

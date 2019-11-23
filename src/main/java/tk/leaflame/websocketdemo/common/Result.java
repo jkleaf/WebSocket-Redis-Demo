@@ -13,6 +13,7 @@ public class Result<T> {
     private static final String DEFAULT_NOT_FOUND_MESSAGE = "NOT FOUND";
     private static final String DEFAULT_UNAUTHORIZED_MESSAGE = "UNAUTHORIZED";
     private static final String DEFAULT_INTERNAL_SERVER_ERROR_MESSAGE = "INTERNAL SERVER ERROR";
+    private static final String DEFAULt_CREATED_MESSAGEG = "CREATED";
 
 //    private Result{
 //    }
@@ -85,6 +86,10 @@ public class Result<T> {
 
     public static Result forbidden(String message) {
         return new Result().setCode(ResultCode.FORBIDDEN).setMessage(message == null ? DEFAULT_FORBIDDEN_MESSAGE : message);
+    }
+
+    public static Result created(String message) {
+        return new Result().setCode(ResultCode.Created).setMessage(message == null ? DEFAULt_CREATED_MESSAGEG : message);
     }
 
     //todo

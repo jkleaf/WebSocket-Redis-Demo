@@ -8,10 +8,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tk.leaflame.websocketdemo.component.AuthenticationAccessDeniedHandler;
+import tk.leaflame.websocketdemo.filter.CorsFilter;
 import tk.leaflame.websocketdemo.filter.JwtFilter;
 import tk.leaflame.websocketdemo.filter.JwtLoginFilter;
 import tk.leaflame.websocketdemo.service.UserService;
@@ -78,10 +81,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .formLogin().disable()
+                .cors().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
+                .and()
+                .headers().frameOptions().disable()
+                .and()
+                .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
                 .addFilterBefore(new JwtLoginFilter("/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
-                .csrf().disable()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 }

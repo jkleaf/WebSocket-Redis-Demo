@@ -35,11 +35,12 @@ public class UserService implements UserDetailsService {
     }
 
     //todo
-    public int regUser(Long userId, String username, String password) {
-        if (userMapper.loadUserByUserName(username) != null) {
+    public int regUser(User user) {
+        if (userMapper.loadUserByUserName(user.getUsername()) != null) {
             return -1;
         }
-        return userMapper.regUser(userId, username, new BCryptPasswordEncoder().encode(password));
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        return userMapper.regUser(user);
     }
 
     public int updateUser(User user) {

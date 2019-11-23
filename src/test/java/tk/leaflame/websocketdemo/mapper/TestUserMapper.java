@@ -20,6 +20,9 @@ class TestUserMapper {
     UserMapper userMapper;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     AdminMapper adminMapper;
 
     @Test
@@ -34,10 +37,10 @@ class TestUserMapper {
     @Test
     void testRegUser() {
         User user = new User();
-        user.setUserId(100003L);
-        user.setUsername("sdcs5c");
+        user.setUsername("sd5v4dsv45");
         user.setPassword("3sdc15sc");
-        System.out.println(userMapper.regUser(user.getUserId(), user.getUsername(), user.getPassword()));
+        user.setEmail("6dsv48@orjb.com");
+        System.out.println(userService.regUser(user));
     }
 
     @Test

@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tk.leaflame.websocketdemo.mapper.UserMapper">
     <insert id="regUser">
-        insert into user
-        values (null, #{userId}, #{username}, #{password})
+        insert into user (username, password, email, avatar, wins, scores)
+        values (#{user.username}, #{user.password}, #{user.email}, null, 0, 0)
     </insert>
     <select id="loadUserByUserName" resultType="tk.leaflame.websocketdemo.entity.User">
         select *

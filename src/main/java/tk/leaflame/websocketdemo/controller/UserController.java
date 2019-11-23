@@ -23,12 +23,12 @@ public class UserController {
     //todo @RequestBody User
     @RequestMapping(value = "/reg", method = RequestMethod.POST)
     @ApiOperation("注册用户")
-    public Result regUser(Long userId,/*@RequestParam("username") */String username, /*@RequestParam("password") */String password) {
-        int i = userService.regUser(userId, username, password);
+    public Result regUser(@RequestBody User user) {
+        int i = userService.regUser(user);
         if (i == 1) {
             return Result.ok("注册成功!");
         } else if (i == -1) {
-            return Result.error("用户名重复,注册失败!");
+            return Result.created("用户名重复,注册失败!");
         }
         return Result.error("注册失败!");
     }
