@@ -11,6 +11,7 @@
     <groupId>tk.leaflame</groupId>
     <artifactId>websocket-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+<!--    <packaging>jar</packaging>-->
     <name>websocket-demo</name>
     <description>Demo project for Spring Boot</description>
 
@@ -119,6 +120,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+<!--                <configuration>-->
+<!--                    <mainClass>tk.leaflame.websocketdemo.WebsocketDemoApplication</mainClass>-->
+<!--                </configuration>-->
             </plugin>
         </plugins>
     </build>
