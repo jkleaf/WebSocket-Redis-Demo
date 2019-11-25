@@ -1,6 +1,7 @@
 package tk.leaflame.websocketdemo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,6 +29,7 @@ public class UserService implements UserDetailsService {
     PasswordEncoder encoder;
 
     @Override
+    @Cacheable(value = "user",key = "#username")
     public UserDetails loadUserByUsername(String username) {
         User user = userMapper.loadUserByUserName(username);
         Optional.ofNullable(user).orElseThrow(() -> new UsernameNotFoundException("用户名不正确!"));

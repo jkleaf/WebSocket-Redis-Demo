@@ -1,6 +1,8 @@
 package tk.leaflame.websocketdemo.mapper;
 
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,25 +16,43 @@ import tk.leaflame.websocketdemo.service.UserService;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class TestUserMapper {
+public class TestUserMapper {
 
-//    @Autowired
-//    UserMapper userMapper;
-//
-//    @Autowired
-//    UserService userService;
+    @Autowired
+    UserMapper userMapper;
+    //
+    @Autowired
+    UserService userService;
 //
 //    @Autowired
 //    AdminMapper adminMapper;
-//
-//    @Test
-//    void testLoadUserByUserName() {
-//        String username = "leaf";
+
+    @Test
+    public void testLoadUserByUserName() {
+        long start = System.currentTimeMillis();
+        String username = "tester";
 //        System.out.println(userMapper);
-//        User user = userMapper.loadUserByUserName(username);
-//        if (user != null)
-//            System.out.println(user.toString());
-//    }
+        for (int i = 1; i <= 100; i++) {
+            User user = userMapper.loadUserByUserName(username);
+            if (user != null)
+                System.out.println(user.toString());
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
+    }
+
+    @Test
+    public void testCacheableLoadUserByUserName() {
+        long start = System.currentTimeMillis();
+        String username = "tester";
+        for (int i = 1; i <= 100; i++) {
+            User user = (User) userService.loadUserByUsername(username);
+            if (user != null)
+                System.out.println(user.toString());
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
+    }
 //
 //    @Test
 //    void testRegUser() {
