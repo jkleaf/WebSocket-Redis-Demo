@@ -18,8 +18,8 @@ import tk.leaflame.websocketdemo.service.UserService;
 @SpringBootTest
 public class TestUserMapper {
 
-    @Autowired
-    UserMapper userMapper;
+//    @Autowired
+//    UserMapper userMapper;
     //
     @Autowired
     UserService userService;
@@ -32,11 +32,11 @@ public class TestUserMapper {
         long start = System.currentTimeMillis();
         String username = "tester";
 //        System.out.println(userMapper);
-        for (int i = 1; i <= 100; i++) {
-            User user = userMapper.loadUserByUserName(username);
-            if (user != null)
-                System.out.println(user.toString());
-        }
+//        for (int i = 1; i <= 100; i++) {
+//            User user = userMapper.loadUserByUserName(username);
+//            if (user != null)
+//                System.out.println(user.toString());
+//        }
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
@@ -45,11 +45,11 @@ public class TestUserMapper {
     public void testCacheableLoadUserByUserName() {
         long start = System.currentTimeMillis();
         String username = "tester";
-        for (int i = 1; i <= 100; i++) {
-            User user = (User) userService.loadUserByUsername(username);
-            if (user != null)
-                System.out.println(user.toString());
-        }
+//        for (int i = 1; i <= 100; i++) {
+//            User user = (User) userService.loadUserByUsername(username);
+//            if (user != null)
+//                System.out.println(user.toString());
+//        }
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }

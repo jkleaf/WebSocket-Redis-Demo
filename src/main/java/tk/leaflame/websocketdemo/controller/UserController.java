@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
-    @ApiOperation(value = "删除用户",notes = "根据用户userId删除用户")
+    @ApiOperation(value = "删除用户", notes = "根据用户userId删除用户")
     public Result deleteUser(@PathVariable Long userId) {
         return userService.deleteUser(userId) == 1 ? Result.ok("删除成功!") : Result.error("删除失败!");
     }
