@@ -11,21 +11,25 @@ import java.io.IOException;
  */
 public class CorsFilter implements Filter {
 
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        HttpServletResponse response = (HttpServletResponse) res;
-        HttpServletRequest reqs = (HttpServletRequest) req;
-        response.setHeader("Access-Control-Allow-Origin","*");//reqs.getHeader("Origin")
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS,PATCH");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,token,Content-Type,Authorization");//jwt header
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
+        resp.setHeader("Access-Control-Allow-Origin", req.getHeader("Origin"));//req.getHeader("Origin")
+        resp.setHeader("Access-Control-Allow-Credentials", "true");
+        resp.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS,PATCH");
+        resp.setHeader("Access-Control-Allow-Headers", "x-requested-with,token,Content-Type,Authorization");//jwt header
 //        response.setHeader("Access-Control-Expose-Headers","*");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        if (reqs.getMethod().toLowerCase().equals("options")) {
-            response.setStatus(200);
+        resp.setHeader("Access-Control-Max-Age", "3600");
+        if (req.getMethod().toLowerCase().equals("options")) {
+            resp.setStatus(200);
         } else {
-            chain.doFilter(req, res);
+            chain.doFilter(req, resp);
         }
     }
-    public void init(FilterConfig filterConfig) {}
-    public void destroy() {}
+
+    public void init(FilterConfig filterConfig) {
+    }
+
+    public void destroy() {
+    }
 }
