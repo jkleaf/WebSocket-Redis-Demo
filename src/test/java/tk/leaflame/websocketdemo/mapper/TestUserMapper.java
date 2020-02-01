@@ -10,6 +10,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import tk.leaflame.websocketdemo.entity.User;
 import tk.leaflame.websocketdemo.service.UserService;
 
+import java.util.Optional;
+import java.util.stream.IntStream;
+
 /**
  * @author leaflame
  * @date 2019/11/15 2:20
@@ -18,7 +21,7 @@ import tk.leaflame.websocketdemo.service.UserService;
 @SpringBootTest
 public class TestUserMapper {
 
-//    @Autowired
+    //    @Autowired
 //    UserMapper userMapper;
     //
     @Autowired
@@ -26,6 +29,16 @@ public class TestUserMapper {
 //
 //    @Autowired
 //    AdminMapper adminMapper;
+
+    private void generateThreads(String username) {
+        IntStream.rangeClosed(1, 100).forEach(i ->
+                new Thread(() -> {
+                    Optional.ofNullable(
+                            userService.loadUserByUsername(username)
+                    ).ifPresent(System.out::print);
+                    System.out.println(" " + Thread.currentThread().getName());
+                }, "Thread-" + i).start());
+    }
 
     @Test
     public void testLoadUserByUserName() {
@@ -37,6 +50,7 @@ public class TestUserMapper {
 //            if (user != null)
 //                System.out.println(user.toString());
 //        }
+        generateThreads(username);
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
@@ -50,6 +64,7 @@ public class TestUserMapper {
 //            if (user != null)
 //                System.out.println(user.toString());
 //        }
+        generateThreads(username);
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }

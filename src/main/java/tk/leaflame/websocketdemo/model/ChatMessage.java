@@ -5,7 +5,7 @@ package tk.leaflame.websocketdemo.model;
  * @date 2019/11/6 18:31
  */
 //todo
-public class ChatMessage {
+public class ChatMessage { //Room
     private MessageType type;
     private String content;
     private String sender;
@@ -14,6 +14,14 @@ public class ChatMessage {
         CHAT,
         JOIN,
         LEAVE
+    }
+
+    public ChatMessage() {
+    }
+
+    public ChatMessage(String content, String sender) {
+        this.content = content;
+        this.sender = sender;
     }
 
     public MessageType getType() {
