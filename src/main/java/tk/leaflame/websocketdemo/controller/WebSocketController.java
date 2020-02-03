@@ -1,5 +1,7 @@
 package tk.leaflame.websocketdemo.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -18,6 +20,8 @@ import java.security.Principal;
 @RequestMapping("/ws")
 public class WebSocketController {
 
+    private Logger logger = LoggerFactory.getLogger(WebSocketController.class);
+
     @Autowired
     SimpMessagingTemplate messagingTemplate; //use spring-messaging
 //    @Autowired
@@ -30,11 +34,13 @@ public class WebSocketController {
 //    }
 
     @MessageMapping("/friend/chat")
-//    @SendToUser
+//    @SendToUser("/queue/friend/chat")
     public void handleChatMsg(Principal principal, String msg) {
-        String destUser = msg.substring(msg.lastIndexOf(";") + 1);
-        String msgContent = msg.substring(0, msg.lastIndexOf(";"));
-        messagingTemplate.convertAndSendToUser(destUser, "/queue/game/chat", new ChatMessage(msgContent, principal.getName()));
+//        String destUser = msg.substring(msg.lastIndexOf(";") + 1);
+//        String msgContent = msg.substring(0, msg.lastIndexOf(";")); //queue+id
+//        messagingTemplate.convertAndSendToUser(destUser, "/queue/friend/chat", new ChatMessage(msgContent, principal.getName()));
+        messagingTemplate.convertAndSend("/queue/friend/chat", principal.getName());
+        logger.info("Principal Name: " + principal.getName());
     }
 
     @MessageMapping("/sys")
@@ -45,7 +51,14 @@ public class WebSocketController {
 
     @MessageMapping("/game/chat")
     @SendTo("/topic/game/chat")
-    public void handleGameChat(Principal principal, String msg) {
-        messagingTemplate.convertAndSend("/topic/game/chat", new ChatMessage(msg, principal.getName()));
+    public void handleGameChat(Principal principal, String uid, String msg) { //topic+id+...
+//        messagingTemplate.convertAndSend("/topic/game/chat", new ChatMessage(msg, principal.getName()));
+        messagingTemplate.convertAndSendToUser(uid, "/topic/game/chat", new ChatMessage(msg, principal.getName()));
+    }
+
+    @MessageMapping("/game/chess")
+    @SendTo("/topic/game/chess")
+    public void handleGameChess(Principal principal, String msg) {
+        messagingTemplate.convertAndSend("/topic/game/chess", new ChatMessage(msg, principal.getName()));
     }
 }

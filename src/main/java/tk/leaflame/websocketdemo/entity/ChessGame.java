@@ -13,11 +13,12 @@ import java.sql.Timestamp;
 public class ChessGame {
 
     private Long id;
-    private String chessBoardUid;
+    private String uid;
     private Long p1id;
     private Long p2id;
     private Timestamp start_time;
     private Timestamp end_time;
     private Integer winner;
     private String chessInfo;
+
 }

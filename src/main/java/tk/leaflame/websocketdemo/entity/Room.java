@@ -3,6 +3,7 @@ package tk.leaflame.websocketdemo.entity;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author leaflame
@@ -16,7 +17,8 @@ public class Room {
     private String uid;
     private Timestamp create_time;
     private Timestamp close_time;
-    private Integer playersCount;
-    private String chessBoardUid;
+    private Integer playersMaxCount;
+    private List<ChessGame> chessGames;
 //    private boolean inGame;
+
 }
