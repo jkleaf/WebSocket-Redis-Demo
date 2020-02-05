@@ -9,7 +9,7 @@ import tk.leaflame.websocketdemo.entity.User;
  */
 public class UserUtils {
 
-    public static User getCurrentUser(){
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public static String getCurrentUser(){
+        return (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

@@ -3,6 +3,7 @@ package tk.leaflame.websocketdemo.controller;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 import tk.leaflame.websocketdemo.common.Result;
+import tk.leaflame.websocketdemo.common.UserUtils;
 
 /**
  * @author leaflame
@@ -12,8 +13,9 @@ import tk.leaflame.websocketdemo.common.Result;
 @Api("测试接口")
 public class TestController {
 
-    @GetMapping("/test")
+    @RequestMapping("/test")
     public Result test() {
+        System.out.println(UserUtils.getCurrentUser());
         return Result.ok("testing...", null);
     }
 

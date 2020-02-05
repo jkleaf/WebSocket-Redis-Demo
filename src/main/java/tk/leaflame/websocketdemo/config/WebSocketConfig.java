@@ -26,7 +26,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/app"); //todo 以“/app”开头的消息应该路由到消息处理方法(@MessageMapping)
+//        registry.setApplicationDestinationPrefixes("/app"); //todo 以“/app”开头的消息应该路由到消息处理方法(@MessageMapping)
 
         //todo Enables a simple in-memory broker 内存中的消息代理 以“/topic”开头的消息应该路由到消息代理
         registry.enableSimpleBroker("/queue", "/topic"/*,"/user"*/);

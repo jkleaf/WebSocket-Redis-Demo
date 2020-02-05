@@ -15,7 +15,7 @@ public class ScheduledConfig {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 1000)
     public void SchedulingNotifications() {
 //        simpMessagingTemplate.convertAndSend("/topic/...","...");
     }
