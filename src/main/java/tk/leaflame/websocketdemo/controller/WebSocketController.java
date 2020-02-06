@@ -3,18 +3,16 @@ package tk.leaflame.websocketdemo.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import tk.leaflame.websocketdemo.model.ChatMessage;
-import tk.leaflame.websocketdemo.server.WebSocketServer;
+import tk.leaflame.websocketdemo.common.ChatMessage;
+import tk.leaflame.websocketdemo.common.ChatMessageType;
+import tk.leaflame.websocketdemo.common.UserUtils;
 
-import java.io.IOException;
 import java.security.Principal;
 
 @Controller
@@ -34,7 +32,7 @@ public class WebSocketController {
 //        return username;
 //    }
 
-    @MessageMapping("/ws/friend/chat")
+    @MessageMapping("/friend/chat")
 //    @SendTo("/queue/friend/chat")
 //    @SendToUser("/queue/friend/chat")
     public void handleChatMsg(Principal principal, String msg) {
@@ -54,14 +52,22 @@ public class WebSocketController {
         return "系统消息";
     }
 
-    @MessageMapping("/ws/game/chat")
-    @SendTo("/topic/game/chat")
-    public void handleGameChat(Principal principal, String uid, String msg) { //topic+id+...
+    @MessageMapping("/{uid}/game/chat") //TODO
+//    @SendTo("/topic/{uid}/game/chat")
+    public void handleGameChat(@DestinationVariable String uid, /*String msg*/@Payload ChatMessage chatMessage) { // /topic+id+...
 //        messagingTemplate.convertAndSend("/topic/game/chat", new ChatMessage(msg, principal.getName()));
-        messagingTemplate.convertAndSendToUser(uid, "/topic/game/chat", new ChatMessage(msg, principal.getName()));
+//        logger.info("principal-name: " + principal.getName());
+//        logger.info("username: "+UserUtils.getCurrentUserName());
+        logger.info("uid: " + uid);
+//        logger.info("msg: " + msg);
+        logger.info("Chat-Message => " + chatMessage.getSender() + ":" + chatMessage.getContent() + " " + chatMessage.getType());
+//        messagingTemplate.convertAndSend("/topic/"+uid+"/game/chat",
+//                new ChatMessage(ChatMessageType.CHAT, msg, UserUtils.getCurrentUserName())); //token (stomp header)
+        messagingTemplate.convertAndSend("/topic/" + uid + "/game/chat",
+                new ChatMessage(ChatMessageType.CHAT, chatMessage.getContent(), chatMessage.getSender())); //no token (get username from msg)
     }
 
-    @MessageMapping("/ws/game/chess")
+    @MessageMapping("/game/chess")
     @SendTo("/topic/game/chess")
     public void handleGameChess(Principal principal, String msg) {
         messagingTemplate.convertAndSend("/topic/game/chess", new ChatMessage(msg, principal.getName()));

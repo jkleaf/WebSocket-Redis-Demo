@@ -1,12 +1,6 @@
 package tk.leaflame.websocketdemo.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
-import tk.leaflame.websocketdemo.model.ChatMessage;
 
 @Service
 public class ChatService {

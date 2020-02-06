@@ -2,10 +2,7 @@ package tk.leaflame.websocketdemo.controller;
 
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tk.leaflame.websocketdemo.common.Result;
 import tk.leaflame.websocketdemo.common.UserUtils;
 import tk.leaflame.websocketdemo.service.RoomService;
@@ -32,4 +29,18 @@ public class RoomController {
         }
     }
 
+    @DeleteMapping("/{uid}")
+    public Result deleteRoom(@PathVariable String uid) {
+        return null;
+    }
+
+    @GetMapping("/{uid}")
+    public Result getRoomByUid(@PathVariable String uid) {
+        return null;
+    }
+
+    @PutMapping("/{uid}")
+    public Result updateRoomByUid(@PathVariable String uid) {
+        return null;
+    }
 }

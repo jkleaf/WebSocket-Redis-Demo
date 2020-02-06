@@ -15,7 +15,7 @@ public class TestController {
 
     @RequestMapping("/test")
     public Result test() {
-        System.out.println(UserUtils.getCurrentUser());
+        System.out.println(UserUtils.getCurrentUserName());
         return Result.ok("testing...", null);
     }
 

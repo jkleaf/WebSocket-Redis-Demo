@@ -18,7 +18,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 //        return new ServerEndpointExporter();
 //    }
 
-    //todo 注册一个websocket端点(与客户端连接new SockJS('/ws'))
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/endpoint").setAllowedOrigins("*").withSockJS(); //CORS

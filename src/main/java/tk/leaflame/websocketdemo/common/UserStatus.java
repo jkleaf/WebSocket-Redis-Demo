@@ -1,4 +1,4 @@
-package tk.leaflame.websocketdemo.model;
+package tk.leaflame.websocketdemo.common;
 
 /**
  * @author leaflame
