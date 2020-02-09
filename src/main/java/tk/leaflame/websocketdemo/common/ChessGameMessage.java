@@ -6,19 +6,20 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author leaflame
- * @date 2019/11/6 18:31
+ * @date 2020/2/7 12:19
  */
-//todo
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatMessage { //Room CHAT JSON
+public class ChessGameMessage {
 
-    private ChatMessageType type;
+    private ChessGameMessageType type;
+
     private String content;
+
     private String sender;
 
-    public ChatMessage(String content, String sender) {
+    public ChessGameMessage(String content, String sender) {
         this.content = content;
         this.sender = sender;
     }

@@ -9,11 +9,11 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import tk.leaflame.websocketdemo.common.ChatMessage;
-import tk.leaflame.websocketdemo.common.ChatMessageType;
-import tk.leaflame.websocketdemo.common.UserUtils;
+import tk.leaflame.websocketdemo.common.*;
 
 import java.security.Principal;
+
+import static tk.leaflame.websocketdemo.common.ChessGameMessageType.*;
 
 @Controller
 @MessageMapping("/ws")
@@ -64,12 +64,17 @@ public class WebSocketController {
 //        messagingTemplate.convertAndSend("/topic/"+uid+"/game/chat",
 //                new ChatMessage(ChatMessageType.CHAT, msg, UserUtils.getCurrentUserName())); //token (stomp header)
         messagingTemplate.convertAndSend("/topic/" + uid + "/game/chat",
-                new ChatMessage(ChatMessageType.CHAT, chatMessage.getContent(), chatMessage.getSender())); //no token (get username from msg)
+                new ChatMessage(chatMessage.getType(), chatMessage.getContent(), chatMessage.getSender())); //no token (get username from msg)
     }
 
-    @MessageMapping("/game/chess")
-    @SendTo("/topic/game/chess")
-    public void handleGameChess(Principal principal, String msg) {
-        messagingTemplate.convertAndSend("/topic/game/chess", new ChatMessage(msg, principal.getName()));
+    @MessageMapping("/{uid}/game/chess")
+//    @SendTo("/topic/{uid}/game/chess")
+    public void handleGameChess(@DestinationVariable String uid, @Payload ChessGameMessage chessMessage) {
+        logger.info("uid: " + uid);
+        logger.info("Chess Message => " + chessMessage.getSender() + ":" + chessMessage.getContent() + " " + chessMessage.getType());
+        messagingTemplate.convertAndSend("/topic/" + uid + "/game/chess",
+                new ChessGameMessage(chessMessage.getType(), chessMessage.getContent(), chessMessage.getSender()));
+//        final Coordinate coordinate = new Coordinate(1, 2);
     }
+
 }

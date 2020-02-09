@@ -30,6 +30,7 @@ import java.util.List;
 public class JwtFilter extends GenericFilterBean {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtFilter.class);
+
 //    @Value("${tk.leaflame.jwt.key}")
 //    private String signingKey;
 
