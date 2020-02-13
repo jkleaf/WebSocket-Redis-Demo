@@ -4,29 +4,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 /**
  * @author leaflame
  * @date 2020/2/7 12:20
  */
-public enum ChessGameMessageType {
+public enum ChessGameMsgType {
 
     //TODO
-    COORDINATE {
-    },
+    COORDINATE (),
     UNDO,
     SENTE,
-    YIELD;
+    YIELD,
+    OVER;
 
     private Coordinate coordinate;
 
     private CoordinateHandler coordinateHandler;
 
-    ChessGameMessageType() {
+    ChessGameMsgType() {
     }
 
-    ChessGameMessageType(CoordinateHandler coordinateHandler, Coordinate coordinate) {
+    ChessGameMsgType(CoordinateHandler coordinateHandler, Coordinate coordinate) {
         this.coordinateHandler = coordinateHandler;
         this.coordinate = coordinate;
     }

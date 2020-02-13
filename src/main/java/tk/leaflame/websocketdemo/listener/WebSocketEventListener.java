@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import tk.leaflame.websocketdemo.common.ChatMessage;
-import tk.leaflame.websocketdemo.common.ChatMessageType;
+import tk.leaflame.websocketdemo.common.ChatMsgType;
 import tk.leaflame.websocketdemo.util.JsonUtil;
 
 import java.net.Inet4Address;
@@ -63,7 +63,7 @@ public class WebSocketEventListener {
         if(username != null) {
             LOGGER.info("User Disconnected : " + username);
             ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setType(ChatMessageType.LEAVE);
+            chatMessage.setType(ChatMsgType.LEAVE);
             chatMessage.setSender(username);
             try {
                 redisTemplate.opsForSet().remove(onlineUsers, username);

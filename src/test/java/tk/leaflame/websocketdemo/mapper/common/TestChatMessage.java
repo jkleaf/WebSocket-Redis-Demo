@@ -7,9 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import tk.leaflame.websocketdemo.common.ChatMessage;
-import tk.leaflame.websocketdemo.common.ChatMessageType;
-
-import javax.sound.sampled.Line;
+import tk.leaflame.websocketdemo.common.ChatMsgType;
 
 /**
  * @author leaflame
@@ -23,6 +21,6 @@ public class TestChatMessage {
 
     @Test
     public void testChatMsg() {
-        System.out.println(new ChatMessage(ChatMessageType.CHAT,"fuck you","tester666"));
+        System.out.println(new ChatMessage(ChatMsgType.CHAT,"fuck you","tester666"));
     }
 }

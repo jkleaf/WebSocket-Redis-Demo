@@ -1,6 +1,7 @@
 package tk.leaflame.websocketdemo.entity;
 
 import lombok.Data;
+import tk.leaflame.websocketdemo.common.RoomStatus;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -19,6 +20,6 @@ public class Room {
     private Timestamp close_time;
     private Integer playersMaxCount;
     private List<ChessGame> chessGames;
-//    private boolean inGame;
 
+    private RoomStatus status;
 }

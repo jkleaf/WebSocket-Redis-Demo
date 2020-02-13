@@ -7,8 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import tk.leaflame.websocketdemo.common.ResultCode;
 
-//@SpringBootTest
-//@RunWith(SpringRunner.class)
+@SpringBootTest
+@RunWith(SpringRunner.class)
 class WebsocketDemoApplicationTests {
 
 //    @Test
@@ -24,5 +24,8 @@ class WebsocketDemoApplicationTests {
 //        String password = "666";
 //        String key = "destiny";
 //    }
+
+//    @Test
+//    void
 
 }

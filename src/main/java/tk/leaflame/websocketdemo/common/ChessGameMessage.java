@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChessGameMessage {
 
-    private ChessGameMessageType type;
+    private ChessGameMsgType type;
 
     private String content;
 

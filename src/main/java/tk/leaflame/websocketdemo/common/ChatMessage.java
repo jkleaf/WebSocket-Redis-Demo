@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChatMessage { //Room CHAT JSON
 
-    private ChatMessageType type;
+    private ChatMsgType type;
     private String content;
     private String sender;
 
