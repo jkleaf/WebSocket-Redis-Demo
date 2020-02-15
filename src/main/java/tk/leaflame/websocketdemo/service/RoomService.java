@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.leaflame.websocketdemo.common.RoomStatus;
 import tk.leaflame.websocketdemo.entity.Room;
 import tk.leaflame.websocketdemo.mapper.RoomMapper;
+import tk.leaflame.websocketdemo.util.RoomUtils;
 
 import java.util.Objects;
 import java.util.Set;
@@ -29,38 +30,39 @@ public class RoomService {
     @Autowired
     RoomMapper roomMapper;
 
+//    @Autowired
+//    RoomUtils roomUtils;
+
     @Autowired
     RedisTemplate<String, String> redisTemplate;
 
-    public int addRoom(String uid, RoomStatus status) {
-        Room room = addRoomStatus(uid, status); //TODO
-        logger.info(room.toString());
+    public int addRoom(String uid, RoomStatus status, String owner) {
+//        Room room = addRoomStatus(RoomUtils.getRoomId(uid), status, owner); //TODO
+//        logger.info(room.toString());
         return roomMapper.addRoom(uid);
     }
 
-    @CachePut(value = "room", key = "'room_uid_'+#uid")
-    public Room addRoomStatus(String uid, RoomStatus status) {
-        Room room = new Room();
-        room.setStatus(status);
-        room.setPlayersMaxCount(1);
-        return room;
-    }
-
-    //TODO #result.uid
-    @CachePut(value = "room", key = "'room_uid_'+#uid")
-    public Room updateRoomStatus(String uid, RoomStatus status, Integer playersMaxCount) {
+    //TODO #result.id
+    @CachePut(value = "room", key = "'room_id_'+#id")
+    public Room updateRoomStatus(String id, RoomStatus status, String owner, Integer playersMaxCount) {
         Room room = new Room();
         room.setStatus(status);
         room.setPlayersMaxCount(playersMaxCount);
+        room.setOwner(owner);
         return room;
     }
 
     public Integer getCurrentRoomsCount() {
-        return Objects.requireNonNull(redisTemplate.keys("room_uid_*")).size();
+        return Objects.requireNonNull(redisTemplate.keys("room::room_id_*")).size();
     }
 
-    @CacheEvict(value = "room", key = "'room_uid_'+#uid", beforeInvocation = false)
-    public void leavingRoom(String uid) {
+
+    public Room getRoomById(String id){
+        return null;
+    }
+
+    @CacheEvict(value = "room", key = "'room_id_'+#id", beforeInvocation = false)
+    public void leavingRoom(String id) {
         //todo do some removing
     }
 

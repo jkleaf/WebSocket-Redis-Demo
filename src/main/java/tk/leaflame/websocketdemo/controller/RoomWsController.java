@@ -57,7 +57,7 @@ public class RoomWsController {
     }
 
     @MessageMapping("/{uid}/game/common/notification") //settings,start,finish,,kick...
-    public void broadCastGameStart(@DestinationVariable String uid, @Payload GameCommonMessage notification) {
+    public void broadCastGameCommonMessage(@DestinationVariable String uid, @Payload GameCommonMessage notification) {
         messagingTemplate.convertAndSend("/topic/" + uid + "/game/common/notification", notification);
     }
 }

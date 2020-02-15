@@ -8,5 +8,6 @@ public enum GameCommonMsgType {
     CHOICE,
     READY,
     START,
-    FINISH
+    SETTINGS
+//    FINISH
 }

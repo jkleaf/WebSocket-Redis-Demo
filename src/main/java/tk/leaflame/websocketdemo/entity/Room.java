@@ -22,4 +22,5 @@ public class Room {
     private List<ChessGame> chessGames;
 
     private RoomStatus status;
+    private String owner;
 }
