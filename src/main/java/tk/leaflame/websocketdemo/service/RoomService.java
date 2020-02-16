@@ -1,5 +1,6 @@
 package tk.leaflame.websocketdemo.service;
 
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,15 +8,19 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.leaflame.websocketdemo.common.RoomStatus;
+import tk.leaflame.websocketdemo.entity.ChessGame;
 import tk.leaflame.websocketdemo.entity.Room;
 import tk.leaflame.websocketdemo.mapper.RoomMapper;
+import tk.leaflame.websocketdemo.util.JsonUtil;
 import tk.leaflame.websocketdemo.util.RoomUtils;
 
-import java.util.Objects;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * @author leaflame
@@ -29,6 +34,9 @@ public class RoomService {
 
     @Autowired
     RoomMapper roomMapper;
+
+    @Autowired
+    SimpMessagingTemplate messagingTemplate;
 
 //    @Autowired
 //    RoomUtils roomUtils;
@@ -52,13 +60,27 @@ public class RoomService {
         return room;
     }
 
+    public void broadCastRoomsInfo() {
+        messagingTemplate.convertAndSend("/topic/hall/rooms", JsonUtil.parseObjToJson(getCurRooms()));
+    }
+
     public Integer getCurrentRoomsCount() {
         return Objects.requireNonNull(redisTemplate.keys("room::room_id_*")).size();
     }
 
+    public List<Room> getCurRooms() {
+        List<Room> rooms = new ArrayList<>();
+        Objects.requireNonNull(redisTemplate.keys("room::room_id_*")).forEach(
+                key -> Optional.ofNullable(redisTemplate.opsForValue().get(key)).ifPresent(v -> {
+                    rooms.add(JsonUtil.parseJsonToObj(v, Room.class));
+                    logger.info(v);
+                })
+        );
+        return rooms;
+    }
 
-    public Room getRoomById(String id){
-        return null;
+    public Room getRoomById(String id) {
+        return JsonUtil.parseJsonToObj(redisTemplate.opsForValue().get("room::room_id_" + id), Room.class);
     }
 
     @CacheEvict(value = "room", key = "'room_id_'+#id", beforeInvocation = false)

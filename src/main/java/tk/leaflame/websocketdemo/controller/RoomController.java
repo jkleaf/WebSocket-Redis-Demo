@@ -13,6 +13,8 @@ import tk.leaflame.websocketdemo.entity.Room;
 import tk.leaflame.websocketdemo.service.RoomService;
 import tk.leaflame.websocketdemo.util.RoomUtils;
 
+import java.util.List;
+
 /**
  * @author leaflame
  * @date 2020/2/1 2:59
@@ -33,11 +35,18 @@ public class RoomController {
         RoomStatus roomStatus = Enum.valueOf(RoomStatus.class, status);
         int i = roomService.addRoom(uid, roomStatus, UserUtils.getCurrentUserName());
         Room room = roomService.updateRoomStatus(RoomUtils.getRoomId(uid), roomStatus, UserUtils.getCurrentUserName(), 1);
+        roomService.broadCastRoomsInfo();
         if (i == 1) {
             return Result.ok("创建成功");
         } else {
             return Result.error("创建失败");
         }
+    }
+
+    @RequestMapping("/cur/rooms")
+    public Result getCurRooms() {
+        List<Room> curRooms = roomService.getCurRooms();
+        return Result.ok("Current Rooms", curRooms);
     }
 
     @GetMapping("/cur/count")
@@ -63,7 +72,7 @@ public class RoomController {
     public Result getRoomById(@PathVariable String id) {
         Room room = roomService.getRoomById(id);
         logger.info(room.toString());
-        return null;
+        return Result.ok("ok", room);
     }
 
     @GetMapping("/{uid}")

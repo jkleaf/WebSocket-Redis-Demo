@@ -1,4 +1,4 @@
-package tk.leaflame.websocketdemo.mapper.mapper;
+package tk.leaflame.websocketdemo.mapper;
 
 //import org.junit.jupiter.api.Test;
 

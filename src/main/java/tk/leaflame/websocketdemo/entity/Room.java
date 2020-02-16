@@ -1,6 +1,7 @@
 package tk.leaflame.websocketdemo.entity;
 
 import lombok.Data;
+import lombok.ToString;
 import tk.leaflame.websocketdemo.common.RoomStatus;
 
 import java.sql.Timestamp;
