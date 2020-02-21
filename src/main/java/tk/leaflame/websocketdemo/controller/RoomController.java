@@ -34,7 +34,7 @@ public class RoomController {
             /*@RequestParam(value = "owner") String owner*//*@RequestParam(required = false, value = "playersCount") Integer playersCount*/) {
         RoomStatus roomStatus = Enum.valueOf(RoomStatus.class, status);
         int i = roomService.addRoom(uid, roomStatus, UserUtils.getCurrentUserName());
-        Room room = roomService.updateRoomStatus(RoomUtils.getRoomId(uid), roomStatus, UserUtils.getCurrentUserName(), 1);
+        Room room = roomService.updateRoomStatus(uid,RoomUtils.getRoomId(uid), roomStatus, UserUtils.getCurrentUserName(), 1);
         roomService.broadCastRoomsInfo();
         if (i == 1) {
             return Result.ok("创建成功");

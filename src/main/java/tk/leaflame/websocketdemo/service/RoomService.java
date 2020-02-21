@@ -52,8 +52,10 @@ public class RoomService {
 
     //TODO #result.id
     @CachePut(value = "room", key = "'room_id_'+#id")
-    public Room updateRoomStatus(String id, RoomStatus status, String owner, Integer playersMaxCount) {
+    public Room updateRoomStatus(String uid, String id, RoomStatus status, String owner, Integer playersMaxCount) {
         Room room = new Room();
+        room.setId(Long.valueOf(id));
+        room.setUid(uid);
         room.setStatus(status);
         room.setPlayersMaxCount(playersMaxCount);
         room.setOwner(owner);

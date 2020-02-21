@@ -12,6 +12,7 @@ import tk.leaflame.websocketdemo.common.ChatMessage;
 import tk.leaflame.websocketdemo.common.ChessGameMessage;
 import tk.leaflame.websocketdemo.common.GameCommonMessage;
 import tk.leaflame.websocketdemo.common.GameCommonMsgType;
+import tk.leaflame.websocketdemo.service.RoomService;
 
 import java.util.Map;
 
@@ -28,6 +29,9 @@ public class RoomWsController {
     @Autowired
     SimpMessagingTemplate messagingTemplate;
 
+    @Autowired
+    RoomService roomService;
+
     @MessageMapping("/{uid}/game/chat") //TODO
 //    @SendTo("/topic/{uid}/game/chat")
     public void handleGameChat(@DestinationVariable String uid, /*String msg*/@Payload ChatMessage chatMessage) { // /topic+id+...
@@ -39,6 +43,11 @@ public class RoomWsController {
         logger.info("Chat-Message => " + chatMessage.getSender() + ":" + chatMessage.getContent() + " " + chatMessage.getType());
 //        messagingTemplate.convertAndSend("/topic/"+uid+"/game/chat",
 //                new ChatMessage(ChatMsgType.CHAT, msg, UserUtils.getCurrentUserName())); //token (stomp header)
+        if (chatMessage.getType().toString().equalsIgnoreCase("LEAVE")) { //todo
+            roomService.broadCastRoomsInfo();
+        }/*else if(){
+
+        }*/
         messagingTemplate.convertAndSend("/topic/" + uid + "/game/chat", chatMessage); //no token (get username from msg)
     }
 
@@ -51,12 +60,7 @@ public class RoomWsController {
 //        final Coordinate coordinate = new Coordinate(1, 2);
     }
 
-    @MessageMapping("/{uid}/game/choice") //confirm,cancel(choice,ready)
-    public void broadCastPlayersChoice(@DestinationVariable String uid, @Payload GameCommonMessage choice) {
-        messagingTemplate.convertAndSend("/topic/" + uid + "/game/choice", choice);
-    }
-
-    @MessageMapping("/{uid}/game/common/notification") //settings,start,finish,,kick...
+    @MessageMapping("/{uid}/game/common/notification") //settings,start,finish,confirm,cancel,choice,ready,kick...
     public void broadCastGameCommonMessage(@DestinationVariable String uid, @Payload GameCommonMessage notification) {
         messagingTemplate.convertAndSend("/topic/" + uid + "/game/common/notification", notification);
     }

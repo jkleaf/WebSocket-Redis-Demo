@@ -13,6 +13,6 @@ public final class RoomUtils {
     private Room room;
 
     public static String getRoomId(String uid) {
-        return uid.substring(uid.lastIndexOf("$"));
+        return uid.substring(uid.lastIndexOf("$") + 1);
     }
 }

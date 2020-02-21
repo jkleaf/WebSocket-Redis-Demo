@@ -9,5 +9,6 @@ public enum GameCommonMsgType {
     READY,
     START,
     SETTINGS
-//    FINISH
+//    FINISH,
+//    KICK
 }
