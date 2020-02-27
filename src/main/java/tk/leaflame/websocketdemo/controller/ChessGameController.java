@@ -1,12 +1,12 @@
 package tk.leaflame.websocketdemo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tk.leaflame.websocketdemo.common.Result;
+import tk.leaflame.websocketdemo.entity.ChessGame;
 import tk.leaflame.websocketdemo.service.ChessGameService;
+import tk.leaflame.websocketdemo.service.UserService;
+import tk.leaflame.websocketdemo.util.JsonUtil;
 
 /**
  * @author leaflame
@@ -19,9 +19,19 @@ public class ChessGameController {
     @Autowired
     ChessGameService chessGameService;
 
+    @Autowired
+    UserService userService;
+
     @PostMapping("/{uid}")
-    public Result addChessGame(@PathVariable String uid) {
-        int i = chessGameService.addChessGame(uid);
+    public Result addChessGame(@PathVariable String uid, /*@RequestBody*/ String chessGameJson) {
+//        ChessGame chessGame= JsonUtil.parseJsonToObj(chessGameJson, ChessGame.class);
+        String player1 = "";
+        String player2 = "";
+        Integer winner = Integer.valueOf("");
+        String chessRecord = "";
+        Long p1Id = userService.getIdByUserName(player1);
+        Long p2Id = userService.getIdByUserName(player2);
+        int i = chessGameService.addChessGame(uid, p1Id, p2Id, winner, chessRecord);
         if (i == 1) {
             return Result.ok("ok");
         } else {

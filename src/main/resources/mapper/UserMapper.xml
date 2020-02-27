@@ -12,4 +12,7 @@
         from user
         where username = #{username}
     </select>
+    <select id="getIdByUserName" resultType="java.lang.Long">
+        select id from user where username=#{username}
+    </select>
 </mapper>

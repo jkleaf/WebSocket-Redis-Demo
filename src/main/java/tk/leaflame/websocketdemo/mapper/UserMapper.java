@@ -18,4 +18,6 @@ public interface UserMapper {
     int updateUser(User user);
 
     int deleteUser(Long userId);
+
+    long getIdByUserName(String username);
 }

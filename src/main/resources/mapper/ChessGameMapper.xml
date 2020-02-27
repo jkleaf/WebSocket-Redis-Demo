@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tk.leaflame.websocketdemo.mapper.ChessGameMapper">
+    <insert id="addChessGame">
+        insert into chessgame (uid, p1id, p2id, start_time, end_time, winner, chessInfo)
+        values (#{chessGame.uid}, #{chessGame.p1Id}, #{chessGame.p2Id}, #{chessGame.start_time},
+                #{chessGame.end_time}, #{chessGame.winner}, #{chessGame.chessInfo})
+    </insert>
+</mapper>

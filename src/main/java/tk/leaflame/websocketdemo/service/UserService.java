@@ -53,5 +53,9 @@ public class UserService implements UserDetailsService {
         return userMapper.deleteUser(userId);
     }
 
+    public long getIdByUserName(String username) {
+        return userMapper.getIdByUserName(username);
+    }
+
     //todo
 }
