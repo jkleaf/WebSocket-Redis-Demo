@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tk.leaflame.websocketdemo.mapper.UserMapper">
     <insert id="regUser">
-        insert into user (username, password, email, avatar, wins, scores)
-        values (#{user.username}, #{user.password}, #{user.email}, null, 0, 0)
+        insert into user (username, password, email, avatar, wins, loses, draws, scores, role, deleted)
+        values (#{user.username}, #{user.password}, #{user.email}, null, 0, 0, 0, 0, 1, 0)
     </insert>
     <select id="loadUserByUserName" resultType="tk.leaflame.websocketdemo.entity.User">
         select *
@@ -13,6 +13,8 @@
         where username = #{username}
     </select>
     <select id="getIdByUserName" resultType="java.lang.Long">
-        select id from user where username=#{username}
+        select id
+        from user
+        where username = #{username}
     </select>
 </mapper>

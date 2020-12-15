@@ -26,8 +26,13 @@ public class User implements UserDetails {
     private String email;
     private String avatar;
     private Timestamp create_time;
+    private Timestamp update_time;
     private Integer wins;
+    private Integer loses;
+    private Integer draws;
     private Long scores;
+    private Integer role;
+    private Integer deleted;
 
 //    private List<GrantedAuthority> authorities;
 
