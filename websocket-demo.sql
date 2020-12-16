@@ -11,7 +11,7 @@
  Target Server Version : 50723
  File Encoding         : 65001
 
- Date: 16/12/2020 11:36:54
+ Date: 16/12/2020 11:47:32
 */
 
 SET NAMES utf8mb4;
@@ -79,6 +79,7 @@ DROP TABLE IF EXISTS `msg_resv`;
 CREATE TABLE `msg_resv`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `mid` bigint(20) NULL DEFAULT NULL,
+  `receiver_id` bigint(20) NULL DEFAULT NULL,
   `has_read` tinyint(255) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
