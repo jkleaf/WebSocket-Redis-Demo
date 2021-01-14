@@ -7,6 +7,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import tk.leaflame.websocketdemo.entity.Rank;
 import tk.leaflame.websocketdemo.service.RankService;
+import tk.leaflame.websocketdemo.service.RoomService;
+import tk.leaflame.websocketdemo.util.JsonUtil;
 
 import java.util.*;
 
@@ -19,6 +21,9 @@ public class ScheduledConfig {
 
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
+
+    @Autowired
+    RoomService roomService;
 
     @Autowired
     RankService rankService;
@@ -36,6 +41,11 @@ public class ScheduledConfig {
     public void SchedulingSendSysMsgToUser() {
 //        simpMessagingTemplate.convertAndSendToUser("1","/queue/...");
     }
+
+//    @Scheduled(fixedRate = 1000)
+//    public void SchedulingBroadcastRoomsInfo(){
+//        roomService.broadCastRoomsInfo();
+//    }
 
     //todo Rank
     @Scheduled(fixedRate = 2000)

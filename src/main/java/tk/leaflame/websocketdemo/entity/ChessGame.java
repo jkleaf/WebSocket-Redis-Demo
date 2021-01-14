@@ -24,5 +24,6 @@ public class ChessGame {
     private Timestamp end_time;
     private Integer winner;
     private String chessInfo;
+    private Long award;
 
 }

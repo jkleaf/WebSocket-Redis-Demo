@@ -19,12 +19,12 @@ public class ChessGameService {
     @Autowired
     ChessGameMapper chessGameMapper;
 
-    public int addChessGame(String uid, Long p1Id, Long p2Id, Integer winner, String chessRecord) {
+    public int addChessGame(String uid, Long p1Id, Long p2Id, Integer winner, String chessRecord,Long award) {
         String chessInfo = handleChessGameInfo(chessRecord);
         Long id = null;
         Timestamp startTime = null;
         Timestamp endTime = null;
-        ChessGame chessGame = new ChessGame(id, uid, p1Id, p2Id, startTime, endTime, winner, chessRecord);
+        ChessGame chessGame = new ChessGame(id, uid, p1Id, p2Id, startTime, endTime, winner, chessRecord,award);
         return chessGameMapper.addChessGame(chessGame);
     }
 

@@ -4,11 +4,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 import tk.leaflame.websocketdemo.entity.Rank;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author leaflame
@@ -18,12 +20,9 @@ import java.util.List;
 @SpringBootTest
 public class TestRankService {
 
-    @Autowired
-    RankService rankService;
+    private static List<Rank> list = new ArrayList<>();
 
-    @Test
-    public void testAddRanks() {
-        List<Rank> list = new ArrayList<>();
+    static {
         list.add(new Rank("opskvops", 6545565));
         list.add(new Rank("dfuibhu", 3456435));
         list.add(new Rank("njoigfhisf", 453253));
@@ -35,7 +34,29 @@ public class TestRankService {
         list.add(new Rank("wuyeb", 35423));
         list.add(new Rank("obpf", 86446));
         list.add(new Rank("nbnfib", 867652));
-        list.add(new Rank("dtdqdrr", 27878));
-        list.forEach(rank -> rankService.addRank(rank));
+        list.add(new Rank("nbnfib", 27878)); //duplicate
     }
+
+    @Autowired
+    RankService rankService;
+
+    @Test
+    public void testAddRanks() {
+//        list.forEach(rank -> rankService.addOrUpdateRank(rank));
+        rankService.addOrUpdateRank(new Rank("DEMO1",53454));
+    }
+
+    @Test
+    public void testUpdateRanks() {
+        Rank rank = new Rank("nbnfib", 5846);
+//        Rank rank = new Rank("DEMO1", 34533);
+        rankService.addOrUpdateRank(rank);
+    }
+
+    @Test
+    public void testGetAllRanks(){
+        List<Rank> rankList = rankService.getAllRanks();
+        rankList.forEach(System.out::println);
+    }
+
 }

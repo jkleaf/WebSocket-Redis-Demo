@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tk.leaflame.websocketdemo.mapper.ChessGameMapper">
     <insert id="addChessGame">
-        insert into chessgame (uid, p1id, p2id, start_time, end_time, winner, chessInfo)
+        insert into chessgame (uid, p1id, p2id, start_time, end_time, winner, chessInfo, award)
         values (#{chessGame.uid}, #{chessGame.p1Id}, #{chessGame.p2Id}, #{chessGame.start_time},
-                #{chessGame.end_time}, #{chessGame.winner}, #{chessGame.chessInfo})
+                #{chessGame.end_time}, #{chessGame.winner}, #{chessGame.chessInfo}, #{chessGame.award})
     </insert>
 </mapper>
